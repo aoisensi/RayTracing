@@ -38,6 +38,7 @@
     <Compile Include="BodySphere.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Image.cs" />
+    <Compile Include="LightDiffuse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Ray.cs" />
     <Compile Include="Triangle.cs" />

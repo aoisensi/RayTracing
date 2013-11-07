@@ -42,5 +42,6 @@ namespace RayTracing
 
         public readonly static Color Red = new Color(255, 0, 0);
         public readonly static Color Blue = new Color(0, 0, 255);
+        public readonly static Color CornflowerBlue = new Color(100, 149, 237);
     }
 }

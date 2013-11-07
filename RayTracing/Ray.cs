@@ -25,6 +25,7 @@ namespace RayTracing
         public Ray(Vector3 Origin, Vector3 Direction)
         {
             origin = Origin;
+            Direction.Normalize();
             direction = Direction;
         }
     }
