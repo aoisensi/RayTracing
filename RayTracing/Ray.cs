@@ -28,5 +28,10 @@ namespace RayTracing
             Direction.Normalize();
             direction = Direction;
         }
+
+        public Vector3 Away(double Distance)
+        {
+            return Origin.Add(Direction.Mul(Distance));
+        }
     }
 }

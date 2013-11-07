@@ -83,6 +83,13 @@ namespace RayTracing
             return norm;
         }
 
+        public Vector3 Normalized()
+        {
+            double norm = Norm();
+            double rnorm = 1.0 / norm;
+            return this.Mul(rnorm);
+        }
+
         public override string ToString()
         {
             return string.Format("({0}, {1}, {2})", X, Y, Z);

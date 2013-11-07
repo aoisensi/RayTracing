@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RayTracing
 {
-    class BodySphere
+    class ShapeSphere : Shape
     {
         double r;
         Vector3 p;
@@ -16,13 +16,13 @@ namespace RayTracing
             get { return p; }
             set { p = value; }
         }
-        public BodySphere(Vector3 Point, double Radius)
+        public ShapeSphere(Vector3 Point, double Radius)
         {
             r = Radius;
             p = Point;
         }
 
-        public double Intersection(Ray Ray)
+        public override double Intersection(Ray Ray)
         {
             double A = Ray.Direction.SquaredNorm();
             double B = 2.0 * ((Ray.Origin.Sub(p).Dot(Ray.Direction)));
@@ -37,7 +37,10 @@ namespace RayTracing
                 double t1 = (-B + Math.Sqrt(D)) / (2 * A);
                 double t2 = (-B - Math.Sqrt(D)) / (2 * A);
                 if (t1 < 0.0)
-                    return t2;
+                    if (t2 < 0.0)
+                        return double.NaN;
+                    else
+                        return t2;
                 if (t2 < 0.0)
                     return t1;
                 return t1 < t2 ? t1 : t2;
