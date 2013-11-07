@@ -69,6 +69,11 @@ namespace RayTracing
             return new Illuminance(R * Value.R, G * Value.G, B * Value.B);
         }
 
+        public Illuminance Mul(double Value)
+        {
+            return new Illuminance(R * Value, G * Value, B * Value);
+        }
+
         readonly static Func<double, byte> castf = (v) => ((byte)((v < 0.0 ? 0.0 : v > 1.0 ? 1.0 : v) * byte.MaxValue));
         public static explicit operator Color(Illuminance Value)
         {

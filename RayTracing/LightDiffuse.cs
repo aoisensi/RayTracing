@@ -23,19 +23,12 @@ namespace RayTracing
             c = Illuminance;
         }
 
-        public override Illuminance Spotlight(World World, Vector3 Spot)
+        public override Illuminance Spotlight(World World, Vector3 Spot, out Vector3 Incident)
         {
-            Vector3 l = Point.Sub(Spot);
-            double Dl = l.Norm() - MathHelper.Epsilon;
-            l.Normalize();
-            Ray shadow = new Ray(Spot.Add(l.Mul(MathHelper.Epsilon)), l);
-            foreach (var s in World.Shapes)
-            {
-                double d = s.Intersection(shadow);
-                if (!double.IsNaN(d))
-                    return Illuminance.Black;
-            }
-            return c;
+            Incident = Point.Sub(Spot);
+            double Dl = Incident.Norm() - MathHelper.Epsilon;
+            Incident.Normalize();
+            Ray shadow = new Ray(Spot.Add(Incident.Mul(MathHelper.Epsilon)), Incident);
             if (World.Shapes.All((s) => (double.IsNaN(s.Intersection(shadow)))))
                 return c;
             else

@@ -16,6 +16,7 @@ namespace RayTracing
             Vector3 camera = new Vector3(0.0, 0.0, -5.0);
             World world = new World(Color.CornflowerBlue);
             world.AddShape(new ShapeSphere(new Vector3(0.0, 0.0, 5.0), 1.0));
+            world.AddShape(new ShapeSphere(new Vector3(-0.8, 0.7, 3.2), 0.2));
             world.AddLight(new LightDiffuse(new Vector3(-5.0, 5.0, -5.0), new Illuminance(1.0)));
 
             for (int y = 0; y < Height; y++)
@@ -25,6 +26,7 @@ namespace RayTracing
                     Ray ray = new Ray(camera, new Vector3((x - (Width / 2)) / (Width / 2.0), (-y + (Height / 2)) / (Height / 2.0), 0.0).Sub(camera));
                     Color c = (Color)world.ShootRay(ray);
                     img.SetPixel(x, y, c);
+                    Console.WriteLine("X = {0}, Y = {1}", x, y);
                 }
             }
             img.Save("out.bmp");

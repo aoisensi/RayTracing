@@ -50,5 +50,10 @@ namespace RayTracing
                 return double.NaN;
             }
         }
+
+        public override Vector3 NormalVector(Vector3 Intersection)
+        {
+            return Intersection.Sub(Point);
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace RayTracing
 {
     abstract class Light
     {
-        public abstract Illuminance Spotlight(World World, Vector3 Spot);
+        public abstract Illuminance Spotlight(World World, Vector3 Spot, out Vector3 Incident);
 
     }
 }
