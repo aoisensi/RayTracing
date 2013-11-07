@@ -88,5 +88,10 @@ namespace RayTracing
             return string.Format("({0}, {1}, {2})", X, Y, Z);
         }
 
+        public static Vector3 operator -(Vector3 Value)
+        {
+            return new Vector3(-Value.X, -Value.Y, -Value.Z);
+        }
+
     }
 }

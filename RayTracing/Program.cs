@@ -16,6 +16,9 @@ namespace RayTracing
             Vector3 camera = new Vector3(0.0, 0.0, -5.0);
             BodySphere sphere = new BodySphere(new Vector3(0.0, 0.0, 5.0), 1.0);
             LightDiffuse light = new LightDiffuse(new Vector3(-5.0, 5.0, -5.0));
+
+            const double ka = 0.01, kd = 0.69, ks = 0.3, a = 8.0, Ea = 0.1, Ei = 1.0, La = ka * Ea;
+
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
@@ -32,8 +35,23 @@ namespace RayTracing
                         Vector3 n = Pi.Sub(sphere.Point);
                         n.Normalize();
                         double g = n.Dot(l);
-                        if (g < 0.0) g = 0.0;
-                        byte gray = (byte)(byte.MaxValue * g);
+                        double Ld = kd * Ei * g;
+                        double Ls;
+                        if (g < 0.0) Ls = 0.0;
+                        else
+                        {
+                            Vector3 r = n.Mul((n.Dot(l)) * 2).Sub(l);
+                            r.Normalize();
+                            Vector3 v = -ray.Direction;
+                            v.Normalize();
+                            double g2 = v.Dot(r);
+                            if (g2 < 0.0) g2 = 0.0;
+                            Ls = ks * Ei * Math.Pow(g2, a);
+                        }
+                        double Lr = La + Ld + Ls;
+                        if (Lr < 0.0) Lr = 0.0;
+                        if (Lr > 1.0) Lr = 1.0;
+                        byte gray = (byte)(byte.MaxValue * Lr);
                         c = new Color(gray, gray, gray);
                     }
                     img.SetPixel(x, y, c);
