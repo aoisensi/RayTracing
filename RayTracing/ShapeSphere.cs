@@ -28,7 +28,7 @@ namespace RayTracing
             double B = 2.0 * ((Ray.Origin.Sub(p).Dot(Ray.Direction)));
             double C = Ray.Origin.Sub(p).SquaredNorm() - Math.Pow(r, 2.0);
             double D = Math.Pow(B, 2.0) - 4 * A * C;
-            if (D == 0)
+            if (D == 0.0)
             {
                 return -B / (2 * A);
             }
@@ -53,7 +53,7 @@ namespace RayTracing
 
         public override Vector3 NormalVector(Vector3 Intersection)
         {
-            return Intersection.Sub(Point);
+            return Intersection.Sub(Point).Normalized();
         }
     }
 }

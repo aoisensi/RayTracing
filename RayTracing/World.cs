@@ -37,19 +37,21 @@ namespace RayTracing
             foreach (var s in shapes)
             {
                 var t = s.Intersection(Ray);
-                if (double.IsNaN(t)) continue;
+                if (!t.IsPositive()) continue;
                 if (distance < t) continue;
                 shape = s;
                 distance = t;
             }
             if (shape == null) return sky;
-            return lightes.Select((l) => {
+            var result = new Illuminance();
+            foreach(var l in lightes) {
                 Vector3 Incident, Intersection = Ray.Away(distance);
                 Illuminance light = l.Spotlight(this, Intersection, out Incident);
                 Vector3 NormalVector = shape.NormalVector(Intersection);
                 double d = NormalVector.Dot(Incident);
-                return light.Mul(d);
-            }).Aggregate((l,r)=>(l.Add(r)));
+                result = result.Add(light.Mul(d));
+            }
+            return result;
         }
     }
 }

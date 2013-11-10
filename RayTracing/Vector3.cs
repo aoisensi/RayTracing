@@ -9,6 +9,7 @@ namespace RayTracing
     struct Vector3
     {
         double x, y, z;
+        bool unit;
 
         public double X
         {
@@ -33,6 +34,7 @@ namespace RayTracing
             x = X;
             y = Y;
             z = Z;
+            unit = false;
         }
 
         public Vector3 Add(Vector3 Value)
@@ -80,14 +82,27 @@ namespace RayTracing
             X *= rnorm;
             Y *= rnorm;
             Z *= rnorm;
+            unit = true;
             return norm;
         }
 
         public Vector3 Normalized()
         {
+            if (unit) return this;
             double norm = Norm();
             double rnorm = 1.0 / norm;
-            return this.Mul(rnorm);
+            Vector3 result = this.Mul(rnorm);
+            result.unit = true;
+            return result;
+        }
+
+        /// <summary>
+        /// 単位ベクトルかどうか
+        /// </summary>
+        /// <returns>単位ベクトルならtrue</returns>
+        public bool IsUnit()
+        {
+            return unit;
         }
 
         public override string ToString()
@@ -99,6 +114,5 @@ namespace RayTracing
         {
             return new Vector3(-Value.X, -Value.Y, -Value.Z);
         }
-
     }
 }

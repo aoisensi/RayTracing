@@ -29,10 +29,12 @@ namespace RayTracing
             double Dl = Incident.Norm() - MathHelper.Epsilon;
             Incident.Normalize();
             Ray shadow = new Ray(Spot.Add(Incident.Mul(MathHelper.Epsilon)), Incident);
-            if (World.Shapes.All((s) => (double.IsNaN(s.Intersection(shadow)))))
-                return c;
-            else
-                return Illuminance.Black;
+            foreach (var s in World.Shapes)
+            {
+                var t = s.Intersection(shadow);
+                if (t.IsPositive()) return Illuminance.Black;
+            }
+            return c;
         }
     }
 }

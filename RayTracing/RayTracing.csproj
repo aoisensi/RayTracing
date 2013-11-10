@@ -37,8 +37,11 @@
   <ItemGroup>
     <Compile Include="Illuminance.cs" />
     <Compile Include="Light.cs" />
+    <Compile Include="LightAmbient.cs" />
+    <Compile Include="Material.cs" />
     <Compile Include="MathHelper.cs" />
     <Compile Include="Shape.cs" />
+    <Compile Include="ShapePlane.cs" />
     <Compile Include="ShapeSphere.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Image.cs" />

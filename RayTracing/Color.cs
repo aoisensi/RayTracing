@@ -40,8 +40,9 @@ namespace RayTracing
             return System.Drawing.Color.FromArgb(Value.R, Value.G, Value.B);
         }
 
-        public readonly static Color Red = new Color(255, 0, 0);
-        public readonly static Color Blue = new Color(0, 0, 255);
-        public readonly static Color CornflowerBlue = new Color(100, 149, 237);
+        public static Color Red { get { return new Color(255, 0, 0); } }
+        public static Color Blue { get { return new Color(0, 0, 255); } }
+        public static Color Green { get { return new Color(0, 255, 0); } }
+        public static Color CornflowerBlue { get { return new Color(100, 149, 237); } }
     }
 }
