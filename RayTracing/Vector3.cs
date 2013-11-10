@@ -30,11 +30,17 @@ namespace RayTracing
         }
 
         public Vector3(double X, double Y, double Z)
+            : this(X, Y, Z, true)
+        {
+
+        }
+
+        private Vector3(double X, double Y, double Z, bool Unit)
         {
             x = X;
             y = Y;
             z = Z;
-            unit = false;
+            unit = Unit;
         }
 
         public Vector3 Add(Vector3 Value)
@@ -112,7 +118,7 @@ namespace RayTracing
 
         public static Vector3 operator -(Vector3 Value)
         {
-            return new Vector3(-Value.X, -Value.Y, -Value.Z);
+            return new Vector3(-Value.X, -Value.Y, -Value.Z, Value.unit);
         }
     }
 }

@@ -25,5 +25,15 @@ namespace RayTracing
         {
             return Value > 0.0 && !double.IsNaN(Value);
         }
+
+        public static double ToRate(this double Value)
+        {
+            if (Value < 0.0)
+                return 0.0;
+            else if (Value > 1.0)
+                return 1.0;
+            else
+                return Value;
+        }
     }
 }

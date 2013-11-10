@@ -45,13 +45,11 @@ namespace RayTracing
             if (shape == null) return sky;
             var result = new Illuminance();
             foreach(var l in lightes) {
-                Vector3 Incident, Intersection = Ray.Away(distance);
-                Illuminance light = l.Spotlight(this, Intersection, out Incident);
-                Vector3 NormalVector = shape.NormalVector(Intersection);
-                double d = NormalVector.Dot(Incident);
-                result = result.Add(light.Mul(d));
+                Vector3 Intersection = Ray.Away(distance);
+                Illuminance light = l.Spotlight(this, shape, Intersection, Ray);
+                result = result.Add(light);
             }
-            return result;
+            return result.Mul(new Illuminance(shape.Material.Color));
         }
     }
 }

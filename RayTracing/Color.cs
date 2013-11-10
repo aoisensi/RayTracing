@@ -44,5 +44,7 @@ namespace RayTracing
         public static Color Blue { get { return new Color(0, 0, 255); } }
         public static Color Green { get { return new Color(0, 255, 0); } }
         public static Color CornflowerBlue { get { return new Color(100, 149, 237); } }
+
+        public static Color White { get { return new Color(255, 255, 255); } }
     }
 }

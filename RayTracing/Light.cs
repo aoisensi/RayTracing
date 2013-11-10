@@ -7,7 +7,20 @@ namespace RayTracing
 {
     abstract class Light
     {
-        public abstract Illuminance Spotlight(World World, Vector3 Spot, out Vector3 Incident);
+        Illuminance l;
+
+        public Illuminance Illuminance
+        {
+            get { return l; }
+            set { l = value; }
+        }
+
+        public Light(Illuminance Illuminance)
+        {
+            l = Illuminance;
+        }
+
+        public abstract Illuminance Spotlight(World World, Shape Shape, Vector3 Spot, Ray Ray);
 
     }
 }

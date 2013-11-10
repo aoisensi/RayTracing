@@ -16,7 +16,7 @@ namespace RayTracing
             get { return p; }
             set { p = value; }
         }
-        public ShapeSphere(Vector3 Point, double Radius)
+        public ShapeSphere(Material Material, Vector3 Point, double Radius) : base(Material)
         {
             r = Radius;
             p = Point;

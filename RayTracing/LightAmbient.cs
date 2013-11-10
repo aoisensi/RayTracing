@@ -8,9 +8,13 @@ namespace RayTracing
 {
     class LightAmbient : Light
     {
-        public override Illuminance Spotlight(World World, Vector3 Spot, out Vector3 Incident)
+        Illuminance l;
+
+        public LightAmbient(Illuminance Illuminance) : base(Illuminance) { }
+
+        public override Illuminance Spotlight(World World, Shape Shape, Vector3 Spot, Ray Ray)
         {
-            throw new NotImplementedException();
+            return l.Mul(Shape.Material.ARC);
         }
     }
 }

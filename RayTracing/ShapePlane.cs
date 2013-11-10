@@ -27,7 +27,7 @@ namespace RayTracing
         /// </summary>
         /// <param name="Point">通過点</param>
         /// <param name="Normal">法線ベクトル</param>
-        public ShapePlane(Vector3 Point, Vector3 Normal)
+        public ShapePlane(Material Material, Vector3 Point, Vector3 Normal) : base(Material)
         {
             p = Point;
             n = Normal.Normalized();
