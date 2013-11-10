@@ -49,7 +49,7 @@ namespace RayTracing
                 Illuminance light = l.Spotlight(this, shape, Intersection, Ray);
                 result = result.Add(light);
             }
-            return result.Mul(new Illuminance(shape.Material.Color));
+            return result;
         }
     }
 }

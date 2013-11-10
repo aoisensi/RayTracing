@@ -17,7 +17,7 @@ namespace RayTracing
             Vector3 camera = new Vector3(0.0, 0.0, -5.0);
             World world = new World(Color.CornflowerBlue);
 
-            world.AddShape(new ShapeSphere(new Material(Color.Red), new Vector3(0.0, 0.0, 5.0), 1.0));
+            world.AddShape(new ShapeSphere(Material.Concrete.ChangeColor(new Illuminance(Color.Red)), new Vector3(0.0, 0.0, 5.0), 1.0));
             world.AddShape(new ShapePlane(Material.Concrete, new Vector3(0.0, -1.0, 0.0), new Vector3(0.0, 1.0, 0.0)));
 
             world.AddLight(new LightDiffuse(new Vector3(-5.0, 5.0, -5.0), new Illuminance(1.0)));

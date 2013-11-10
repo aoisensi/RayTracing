@@ -8,16 +8,14 @@ namespace RayTracing
 {
     class Material 
     {
-
-        Color color;
-        double arc, drc, src;
-        double gloss;
+        Illuminance arc, drc, src;
+        double shininess;
 
         /// <summary>
         /// ambient reflection coefficient
         /// 環境反射係数
         /// </summary>
-        public double ARC
+        public Illuminance ARC
         {
             get { return arc; }
             set { arc = value; }
@@ -27,7 +25,7 @@ namespace RayTracing
         /// diffuse reflection constant
         /// 拡散反射係数
         /// </summary>
-        public double DRC
+        public Illuminance DRC
         {
             get { return drc; }
             set { drc = value; }
@@ -37,37 +35,34 @@ namespace RayTracing
         /// specular reflection constant
         /// 鏡面反射係数
         /// </summary>
-        public double SRC
+        public Illuminance SRC
         {
             get { return src; }
             set { src = value; }
         }
 
-        public double Gloss
+        public double Shininess
         {
-            get { return gloss; }
-            set { src = value; }
+            get { return shininess; }
+            set { shininess = value; }
         }
 
-        public Color Color
+        public Material(Illuminance ARC, Illuminance DRC, Illuminance SRC, double Shininess)
         {
-            get { return color; }
-            set { color = value; }
+            arc = ARC;
+            drc = DRC;
+            src = SRC;
+            shininess = 8.0;
         }
 
-        public Material(Color Color)
+        public Material ChangeColor(Illuminance Illuminance)
         {
-            color = Color;
-            arc = 0.01;
-            drc = 0.69;
-            src = 0.30;
-            gloss = 8.0;
+            return new Material(ARC.Mul(Illuminance), DRC.Mul(Illuminance), SRC.Mul(Illuminance), Shininess);
         }
-
 
         public static Material Concrete
         {
-            get { return new Material(Color.White); }
+            get { return new Material(new Illuminance(0.01), new Illuminance(0.69), new Illuminance(0.3), 8.0); }
         }
     }
 }

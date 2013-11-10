@@ -39,7 +39,7 @@ namespace RayTracing
             {
                 Vector3 r = NormalVector.Mul(d * 2).Sub(Incident).Normalized();
                 Vector3 v = -Ray.Direction;
-                ld = ld.Add(Illuminance.Mul(Math.Pow(r.Dot(v).ToRate(), Shape.Material.Gloss) * Shape.Material.SRC));
+                ld = ld.Add(Illuminance.Mul(Shape.Material.SRC.Mul(Math.Pow(r.Dot(v).ToRate(), Shape.Material.Shininess))));
             }
 
             return ld;
