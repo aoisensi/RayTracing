@@ -85,6 +85,29 @@ namespace RayTracing
             get { return new Illuminance(0.0, 0.0, 0.0); }
         }
 
+        public static Illuminance White
+        {
+            get { return new Illuminance(1.0, 1.0, 1.0); }
+        }
 
+        public static Illuminance Red
+        {
+            get { return new Illuminance(1.0, 0.0, 0.0); }
+        }
+
+        public static Illuminance Green
+        {
+            get { return new Illuminance(0.0, 1.0, 0.0); }
+        }
+
+        public static Illuminance Blue
+        {
+            get { return new Illuminance(0.0, 0.0, 1.0); }
+        }
+
+        public bool IsDark()
+        {
+            return !(R > 0.0 || G > 0.0 || B > 0.0);
+        }
     }
 }

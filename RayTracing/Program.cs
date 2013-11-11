@@ -15,20 +15,23 @@ namespace RayTracing
         {
             Image img = new Image(Width, Height);
             Vector3 camera = new Vector3(0.0, 0.0, -5.0);
-            World world = new World(Color.CornflowerBlue);
+            World world = new World(Color.Black);
 
-            world.AddShape(new ShapeSphere(Material.Concrete.ChangeColor(new Illuminance(Color.Red)), new Vector3(0.0, 0.0, 5.0), 1.0));
-            world.AddShape(new ShapePlane(Material.Concrete, new Vector3(0.0, -1.0, 0.0), new Vector3(0.0, 1.0, 0.0)));
 
-            world.AddLight(new LightDiffuse(new Vector3(-5.0, 5.0, -5.0), new Illuminance(1.0)));
-            world.AddLight(new LightAmbient(new Illuminance(Color.Blue, 0.1)));
-            
+            world.AddShape(new ShapeSphere(Material.Mirror, new Vector3(-0.25, -0.5, 3.0), 0.5));
+            world.AddShape(new ShapePlane(Material.Vinyl.ChangeColor(Illuminance.White), new Vector3(0.0, -1.0, 0.0), new Vector3(0.0, 1.0, 0.0)));//床
+            world.AddShape(new ShapePlane(Material.Vinyl.ChangeColor(Illuminance.White), new Vector3(0.0, 1.0, 0.0), new Vector3(0.0, -1.0, 0.0)));//天井
+            world.AddShape(new ShapePlane(Material.Vinyl.ChangeColor(Illuminance.Green), new Vector3(1.0, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0)));//右壁
+            world.AddShape(new ShapePlane(Material.Vinyl.ChangeColor(Illuminance.Red), new Vector3(-1.0, 0.0, 0.0), new Vector3(1.0, 0.0, 0.0)));//左壁
+            world.AddShape(new ShapePlane(Material.Vinyl.ChangeColor(Illuminance.White), new Vector3(0.0, 0.0, 5.0), new Vector3(0.0, 0.0, -1.0)));//奥
+
+            world.AddLight(new LightDiffuse(new Vector3(0.0, 0.9, 2.5), new Illuminance(1.0)));
+
+
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    if (y == 250 && x == 250)
-                        Console.WriteLine("d");
                     Ray ray = new Ray(camera, new Vector3((x - (Width / 2)) / (Width / 2.0), (-y + (Height / 2)) / (Height / 2.0), 0.0).Sub(camera));
                     Color c = (Color)world.ShootRay(ray);
                     img.SetPixel(x, y, c);

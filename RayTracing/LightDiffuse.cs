@@ -21,7 +21,7 @@ namespace RayTracing
             p = Point;
         }
 
-        public override Illuminance Spotlight(World World, Shape Shape, Vector3 Spot, Ray Ray)
+        public override Illuminance Spotlight(World World, Shape Shape, Vector3 Spot, Ray Ray, Vector3 Normal)
         {
             Vector3 Incident = Point.Sub(Spot);
             double Dl = Incident.Norm() - MathHelper.Epsilon;
@@ -30,15 +30,14 @@ namespace RayTracing
             foreach (var s in World.Shapes)
             {
                 var t = s.Intersection(shadow);
-                if (t.IsPositive()) return Illuminance.Black;
+                if (t < Dl) return Illuminance.Black;
             }
-            Vector3 NormalVector = Shape.NormalVector(Spot);
-            double d = NormalVector.Dot(Incident).ToRate();
-            Illuminance ld = Illuminance.Mul(d).Mul(Shape.Material.DRC);
-            if(d > 0.0)
+            double d = Normal.Dot(Incident).ToRate();
+            Illuminance ld = Shape.Material.DRC.Mul(Illuminance.Mul(d));
+            if(d > 0.0 && (!Shape.Material.SRC.IsDark()) && Shape.Material.Shininess > 0.0)
             {
-                Vector3 r = NormalVector.Mul(d * 2).Sub(Incident).Normalized();
-                Vector3 v = -Ray.Direction;
+                Vector3 r = Normal.Mul(d * 2).Sub(Incident).Normalized();
+                Vector3 v = Ray.Direction.Reversed();
                 ld = ld.Add(Illuminance.Mul(Shape.Material.SRC.Mul(Math.Pow(r.Dot(v).ToRate(), Shape.Material.Shininess))));
             }
 

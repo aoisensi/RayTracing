@@ -30,7 +30,7 @@ namespace RayTracing
         }
 
         public Vector3(double X, double Y, double Z)
-            : this(X, Y, Z, true)
+            : this(X, Y, Z, false)
         {
 
         }
@@ -116,9 +116,9 @@ namespace RayTracing
             return string.Format("({0}, {1}, {2})", X, Y, Z);
         }
 
-        public static Vector3 operator -(Vector3 Value)
+        public Vector3 Reversed()
         {
-            return new Vector3(-Value.X, -Value.Y, -Value.Z, Value.unit);
+            return new Vector3(-X, -Y, -Z, unit);
         }
     }
 }

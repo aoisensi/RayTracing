@@ -36,9 +36,11 @@ namespace RayTracing
         public override double Intersection(Ray Ray)
         {
             double m = Ray.Direction.Dot(Normal);
-            if (m == 0.0)
-                return double.NaN;
-            return -(Ray.Origin.Sub(Point).Dot(Normal) / m);
+            if (m < 0.0)
+            {
+                return -(Ray.Origin.Sub(Point).Dot(Normal) / m);
+            }
+            return double.NaN;
         }
 
         public override Vector3 NormalVector(Vector3 Intersection)

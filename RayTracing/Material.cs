@@ -8,7 +8,7 @@ namespace RayTracing
 {
     class Material 
     {
-        Illuminance arc, drc, src;
+        Illuminance arc, drc, src, fsrc;
         double shininess;
 
         /// <summary>
@@ -41,6 +41,16 @@ namespace RayTracing
             set { src = value; }
         }
 
+        /// <summary>
+        /// full specular reflection constant
+        /// 完全鏡面反射係数
+        /// </summary>
+        public Illuminance FSRC
+        {
+            get { return fsrc; }
+            set { fsrc = value; }
+        }
+
         public double Shininess
         {
             get { return shininess; }
@@ -52,7 +62,17 @@ namespace RayTracing
             arc = ARC;
             drc = DRC;
             src = SRC;
-            shininess = 8.0;
+            fsrc = Illuminance.Black;
+            shininess = Shininess;
+        }
+
+        public Material(Illuminance ARC, Illuminance DRC, Illuminance SRC, Illuminance FSRC, double Shininess)
+        {
+            arc = ARC;
+            drc = DRC;
+            src = SRC;
+            fsrc = FSRC;
+            shininess = Shininess;
         }
 
         public Material ChangeColor(Illuminance Illuminance)
@@ -62,7 +82,17 @@ namespace RayTracing
 
         public static Material Concrete
         {
-            get { return new Material(new Illuminance(0.01), new Illuminance(0.69), new Illuminance(0.3), 8.0); }
+            get { return new Material(new Illuminance(0.01), new Illuminance(0.69), new Illuminance(0.3), Illuminance.Black, 8.0); }
+        }
+
+        public static Material Vinyl
+        {
+            get { return new Material(Illuminance.Black, Illuminance.White, Illuminance.Black, Illuminance.Black, 0.0); }
+        }
+
+        public static Material Mirror
+        {
+            get { return new Material(Illuminance.Black, Illuminance.Black, Illuminance.Black, Illuminance.White, 0.0); }
         }
     }
 }

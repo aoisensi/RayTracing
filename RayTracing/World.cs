@@ -8,6 +8,8 @@ namespace RayTracing
 {
     class World
     {
+        const int MAX_RECURSION = 100;
+
         LinkedList<Shape> shapes = new LinkedList<Shape>();
 
         internal LinkedList<Shape> Shapes
@@ -32,6 +34,12 @@ namespace RayTracing
 
         public Illuminance ShootRay(Ray Ray)
         {
+            return ShootRay(Ray, MAX_RECURSION);
+        }
+
+        private Illuminance ShootRay(Ray Ray, int loop)
+        {
+            if (loop == 0) return Illuminance.Black;
             Shape shape = null;
             var distance = double.PositiveInfinity;
             foreach (var s in shapes)
@@ -44,10 +52,24 @@ namespace RayTracing
             }
             if (shape == null) return sky;
             var result = new Illuminance();
+            var Intersection = Ray.Away(distance);
+            var Normal = shape.NormalVector(Intersection);
+
             foreach(var l in lightes) {
-                Vector3 Intersection = Ray.Away(distance);
-                Illuminance light = l.Spotlight(this, shape, Intersection, Ray);
+                Illuminance light = l.Spotlight(this, shape, Intersection, Ray, Normal);
                 result = result.Add(light);
+            }
+
+            if (!shape.Material.FSRC.IsDark()) //鏡
+            {
+                var v = Ray.Direction.Reversed();
+                var d = Normal.Dot(v);
+                if(d > 0.0)
+                {
+                    var r = Normal.Mul(2 * v.Dot(Normal)).Sub(v);
+                    var ray = new Ray(Intersection.Add(r.Mul(MathHelper.Epsilon)), r);
+                    result = result.Add(ShootRay(ray, loop - 1));
+                }
             }
             return result;
         }

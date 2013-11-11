@@ -20,7 +20,7 @@ namespace RayTracing
             l = Illuminance;
         }
 
-        public abstract Illuminance Spotlight(World World, Shape Shape, Vector3 Spot, Ray Ray);
+        public abstract Illuminance Spotlight(World World, Shape Shape, Vector3 Spot, Ray Ray, Vector3 Normal);
 
     }
 }
